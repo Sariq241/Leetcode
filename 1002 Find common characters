@@ -1,0 +1,52 @@
+char** commonChars(char** words, int wordsSize, int* returnSize) {
+    if (wordsSize == 0) {
+        *returnSize = 0;
+        return NULL;
+    }
+    
+    int minFreq[26];
+    memset(minFreq, 0x3f, sizeof(minFreq)); 
+    
+    for (int i = 0; i < wordsSize; i++) {
+        int freq[26] = {0};
+        for (char* p = words[i]; *p; p++) {
+            if (*p >= 'a' && *p <= 'z') {
+                freq[*p - 'a']++;
+            }
+        }
+        for (int j = 0; j < 26; j++) {
+            if (minFreq[j] > freq[j]) {
+                minFreq[j] = freq[j];
+            }
+        }
+    }
+    
+    int total = 0;
+    for (int j = 0; j < 26; j++) {
+        total += minFreq[j];
+    }
+    
+    // Allocate result array
+    char** result = (char**)malloc(sizeof(char*) * total);
+    if (!result) {
+        *returnSize = 0;
+        return NULL;
+    }
+    
+    int idx = 0;
+    for (int j = 0; j < 26; j++) {
+        for (int k = 0; k < minFreq[j]; k++) {
+            result[idx] = (char*)malloc(2 * sizeof(char));
+            if (!result[idx]) {
+                *returnSize = idx;
+                return result;
+            }
+            result[idx][0] = 'a' + j;
+            result[idx][1] = '\0';
+            idx++;
+        }
+    }
+    
+    *returnSize = total;
+    return result;
+}
