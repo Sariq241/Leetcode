@@ -1,0 +1,40 @@
+#include <vector>
+#include <unordered_set>
+#include <algorithm> // Required for std::max
+
+class Solution {
+public:
+    int longestConsecutive(std::vector<int>& nums) {
+        // Handle the edge case of an empty vector
+        if (nums.empty()) {
+            return 0;
+        }
+
+        
+        std::unordered_set<int> s(nums.begin(), nums.end());
+        int longest = 0; 
+
+        
+        for (int num : s) {
+       
+           
+            if (s.find(num - 1) == s.end()) {
+                int currentNum = num;
+              
+                int currentLength = 1; 
+
+             
+                while (s.find(currentNum + 1) != s.end()) {
+                    currentNum++;
+                    currentLength++;
+                }
+
+            
+                longest = std::max(longest, currentLength);
+            }
+        }
+        
+        
+        return longest;
+    }
+};
