@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minStartValue(vector<int>& nums) {
+        
+        int running_sum = 0;
+
+        
+        int min_prefix_sum = 0; 
+
+        for (int x : nums) {
+            
+            running_sum += x;
+
+            
+            if (running_sum < min_prefix_sum) {
+                min_prefix_sum = running_sum;
+            }
+        }
+
+        
+        return 1 - min_prefix_sum;
+    }
+};
