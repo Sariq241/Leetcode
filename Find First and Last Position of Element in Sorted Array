@@ -1,0 +1,26 @@
+#include <vector>
+#include <algorithm> // For std::lower_bound and std::upper_bound
+
+class Solution {
+public:
+    std::vector<int> searchRange(std::vector<int>& nums, int target) {
+        // Find the first occurrence using std::lower_bound
+        auto it_first = std::lower_bound(nums.begin(), nums.end(), target);
+
+        // If the target is not found or the element at it_first is not the target
+        if (it_first == nums.end() || *it_first != target) {
+            return {-1, -1};
+        }
+
+        // Find the last occurrence using std::upper_bound
+        // std::upper_bound returns an iterator to the first element greater than target
+        auto it_last = std::upper_bound(nums.begin(), nums.end(), target);
+
+        // The index of the first occurrence
+        int first_pos = std::distance(nums.begin(), it_first);
+        // The index of the last occurrence is one less than the position returned by upper_bound
+        int last_pos = std::distance(nums.begin(), it_last) - 1;
+
+        return {first_pos, last_pos};
+    }
+};
