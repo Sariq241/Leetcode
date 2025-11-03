@@ -1,0 +1,22 @@
+#include <vector>
+
+class Solution {
+public:
+    char nextGreatestLetter(std::vector<char>& letters, char target) {
+        int left = 0;
+        int right = letters.size(); // Use size as the upper bound for binary search
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (letters[mid] > target) {
+                right = mid; // The potential answer is at mid or to its left
+            } else {
+                left = mid + 1; // The answer must be to the right of mid
+            }
+        }
+        // After the loop, 'left' will be the index of the smallest character 
+        // greater than 'target', or 'letters.size()' if no such character exists.
+        // The modulo operator handles the wrap-around case.
+        return letters[left % letters.size()];
+    }
+};
