@@ -1,0 +1,15 @@
+class Solution {
+public:
+    // Helper function to convert a word into its numeric value
+    int wordToNumber(const string& word) {
+        int num = 0;
+        for (char c : word) {
+            num = num * 10 + (c - 'a');  // build the integer digit by digit
+        }
+        return num;
+    }
+    
+    bool isSumEqual(string firstWord, string secondWord, string targetWord) {
+        return wordToNumber(firstWord) + wordToNumber(secondWord) == wordToNumber(targetWord);
+    }
+};
